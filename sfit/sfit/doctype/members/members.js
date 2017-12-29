@@ -56,16 +56,14 @@ $("#current_day").append(frm.doc.current_day)
 frappe.ui.form.on("Members", "onload", function(frm) {
 $(frm.fields_dict['menu_bar'].wrapper)
 .html(frappe.render_template("button"));
-$(document).ready(function(){
+
 $( "#add_sch" ).click(function() {
-frappe.set_route("List", "Schedules");
+frappe.set_route("Form", "Schedules", frm.doc.name);
 
 });
 
 $( "#mesurement" ).click(function() {
-  // window.location.href = "https://www.example.com";
-  frappe.set_route("List", "Measurement charts and Progression");
-
+frappe.set_route("List", "Measurement charts and Progression", {"member_name": "Vicky"});
 });
 
 $( "#workout_plan" ).click(function() {
@@ -77,7 +75,7 @@ $( "#diet_plans" ).click(function() {
   // window.location.href = "https://www.example.com";
   frappe.set_route("List", "Diet Plans");
 });
-    });
+
 
 
 });
