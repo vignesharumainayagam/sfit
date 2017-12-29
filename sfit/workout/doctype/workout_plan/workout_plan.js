@@ -184,39 +184,6 @@ frappe.set_route("Form", "WorkoutChild", frm.doc.plan_name+d.day);
 
 
 
-frappe.ui.form.on("Workout Plan", "validate", function(frm){
-console.log(frm.doc.table_27)
-if(frm.doc.table_27)
-{
-    for (var i=0; i<frm.doc.table_27.length; i++) 
-    {
-          $.ajax({
-          url : location.origin+"/api/resource/WorkoutChild",
-          dataType: 'text',
-          type: 'POST',
-          contentType: 'application/json',
-          data : JSON.stringify( {
-          "parent1" : frm.doc.name,
-          "day" : frm.doc.table_27[i].day,
-          "forname" : frm.doc.name+frm.doc.table_27[i].day,
-          }
-          ),
-          beforeSend: function(xhr){
-          xhr.setRequestHeader(
-          'X-Frappe-CSRF-Token', frappe.csrf_token
-          );
-          },success: function(data){
-          console.log(data);
-          }, error: function(error){
-          console.log(error);
-          }
-          });
-    }
-}
-
-       });
-
-
 
 frappe.ui.form.on("Workout Plan", "no_of_days", function(frm){
 var to_length = frm.doc.no_of_days;
@@ -234,7 +201,6 @@ if(!frm.doc.__islocal)
 
     }
     cur_frm.get_field("table_27").grid.grid_rows[0].remove()
-
 }
 else {
     var r = parseInt(frm.doc.no_of_days)+1;    
@@ -262,9 +228,8 @@ else{
 
     }
     cur_frm.get_field("table_27").grid.grid_rows[0].remove()
-
 }
-
+cur_frm.save()
 });
 
  
@@ -301,5 +266,41 @@ d = locals[cdt][cdn]
 
 frappe.ui.form.on("Workout Plan", "no_of_days", function(frm){
 alert("Please Save to Continue")
+cur_frm.save()
 });
+
+
+
+
+frappe.ui.form.on("Workout Plan", "validate", function(frm){
+console.log(frm.doc.table_27)
+if(frm.doc.table_27)
+{
+    for (var i=0; i<frm.doc.table_27.length; i++) 
+    {
+          $.ajax({
+          url : location.origin+"/api/resource/WorkoutChild",
+          dataType: 'text',
+          type: 'POST',
+          contentType: 'application/json',
+          data : JSON.stringify( {
+          "parent1" : frm.doc.name,
+          "day" : frm.doc.table_27[i].day,
+          "forname" : frm.doc.name+frm.doc.table_27[i].day,
+          }
+          ),
+          beforeSend: function(xhr){
+          xhr.setRequestHeader(
+          'X-Frappe-CSRF-Token', frappe.csrf_token
+          );
+          },success: function(data){
+          console.log(data);
+          }, error: function(error){
+          console.log(error);
+          }
+          });
+    }
+}
+
+       });
 

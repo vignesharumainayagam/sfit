@@ -35,10 +35,10 @@ def get_data():
 					"type": "doctype",
 					"name": "Workout Log"
 				},											
-				# {
-				# 	"type": "doctype",
-				# 	"name": "WorkoutChild"
-				# },											
+				{
+					"type": "doctype",
+					"name": "WorkoutChild"
+				},											
 				{
 					"type": "doctype",
 					"name": "Workout Plan"
