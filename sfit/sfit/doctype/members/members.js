@@ -63,7 +63,7 @@ frappe.set_route("Form", "Schedules", frm.doc.name);
 });
 
 $( "#mesurement" ).click(function() {
-frappe.set_route("List", "Measurement charts and Progression", {"member_name": "Vicky"});
+frappe.set_route("List", "Measurement charts and Progression", {"member_name": frm.doc.name});
 });
 
 $( "#workout_plan" ).click(function() {
