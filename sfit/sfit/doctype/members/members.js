@@ -2,10 +2,10 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Members', {
-	refresh: function(frm) {
+  refresh: function(frm) {
 
-		
-	}
+    
+  }
 });
 
 frappe.ui.form.on("Members", "validate", function(frm) {
@@ -17,6 +17,9 @@ frappe.ui.form.on("Members", "validate", function(frm) {
 
 
 frappe.ui.form.on("Members", "onload", function(frm) {
+if(!frm.doc.__islocal)
+  {
+
 frappe.call({
 method: "sfit.sfit.doctype.members.members.January",
 args: {
@@ -25,15 +28,24 @@ args: {
        },
 callback: function (r) 
 {
+  if(r.message){
 console.log(r.message)
 cur_frm.set_value("current_workout_plan", r.message[0].workout_plan);
 }
+else{
+  console.log("hi")
+}
+}
 })
+
+    }
+else{
+  console.log("HI")
+}
 });
 
 
 frappe.ui.form.on("Members", "onload", function(frm) {
-// $(frm.fields_dict['html_field'].wrapper).html("<h1>Hello</h1>");
 $(frm.fields_dict['current_workout_plan_html'].wrapper)
 .html(frappe.render_template("dashboard_tile"));
 $(document).ready(function(){
@@ -43,7 +55,6 @@ $("#current_plan").append(frm.doc.current_workout_plan)
 
 
 frappe.ui.form.on("Members", "onload", function(frm) {
-// $(frm.fields_dict['html_field'].wrapper).html("<h1>Hello</h1>");
 $(frm.fields_dict['current_day_html'].wrapper)
 .html(frappe.render_template("dashboard_current_day"));
 $(document).ready(function(){
@@ -58,6 +69,25 @@ $(frm.fields_dict['menu_bar'].wrapper)
 .html(frappe.render_template("button"));
 
 $( "#add_sch" ).click(function() {
+$.ajax({
+          url : location.origin+"/api/resource/Schedules",
+          dataType: 'text',
+          type: 'POST',
+          contentType: 'application/json',
+          data : JSON.stringify( {
+          "member" : frm.doc.name
+          }
+          ),
+          beforeSend: function(xhr){
+          xhr.setRequestHeader(
+          'X-Frappe-CSRF-Token', frappe.csrf_token
+          );
+          },success: function(data){
+          console.log(data);
+          }, error: function(error){
+          console.log(error);
+          }
+          });
 frappe.set_route("Form", "Schedules", frm.doc.name);
 
 });
@@ -67,15 +97,18 @@ frappe.set_route("List", "Measurement charts and Progression", {"member_name": f
 });
 
 $( "#workout_plan" ).click(function() {
-  // window.location.href = "https://www.example.com";
   frappe.set_route("List", "Workout Plan");
 });
 
 $( "#diet_plans" ).click(function() {
-  // window.location.href = "https://www.example.com";
   frappe.set_route("List", "Diet Plans");
 });
 
 
+
+});
+
+
+frappe.ui.form.on("Members", "validate", function(frm) {
 
 });

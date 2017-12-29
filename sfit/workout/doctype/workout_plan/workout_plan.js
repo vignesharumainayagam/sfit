@@ -297,3 +297,9 @@ d = locals[cdt][cdn]
         })
 
 });
+
+
+frappe.ui.form.on("Workout Plan", "no_of_days", function(frm){
+alert("Please Save to Continue")
+});
+
