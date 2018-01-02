@@ -5,9 +5,13 @@
 from __future__ import unicode_literals
 import frappe
 from frappe.model.document import Document
+from frappe import _
+
 
 class Schedules(Document):
-	pass
+    def on_update(self):
+        frappe.db.sql("""UPDATE `tabMembers` SET current_workout_plan = %s WHERE member_name = %s""",(self.workout_plan,self.member))
+
 
 @frappe.whitelist()
 def reset(name):

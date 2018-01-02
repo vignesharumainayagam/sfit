@@ -24,4 +24,3 @@ d = locals[cdt][cdn]
 frappe.model.set_value(cdt, cdn, "table_parent", frm.doc.parent1);
 frappe.model.set_value(cdt, cdn, "table_day", frm.doc.day);
 });
-

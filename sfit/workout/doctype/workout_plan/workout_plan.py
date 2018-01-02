@@ -15,7 +15,6 @@ class WorkoutPlan(Document):
 	pass
 
 
-        
 
 
 @frappe.whitelist()
@@ -25,20 +24,20 @@ def get_child_data(parent, day):
 
 
 
-
 @frappe.whitelist()
 def api(parent, child):
-	data = frappe.db.sql("""SELECT exercise,groups,sets,reps,timer FROM `tabWorkout Child` WHERE main=%s AND day=%s""",(parent, child))
-	array=[]
-	for x in xrange(0,len(data)):
-		array.append({"Groups": data[x][1], "Exercise": data[x][0], "Sets": data[x][2], "Reps": data[x][3], "seconds": data[x][4]})
-	return array
-
-
+        data = frappe.get_list('WorkoutChild Child',
+                fields=["groups", "exercise", "sets", "reps", "timer_count", "rest_interval"],
+                filters = [
+                ["table_parent", "=", parent],
+                ["table_day", "=", child]
+                ]
+                )      
+        return data
 
 @frappe.whitelist()
 def get_child_data_api(parent):
-	data = frappe.db.sql("""SELECT day from `tabWorkoutChild Child` where table_parent=%s group by day""",(parent))
+	data = frappe.db.sql("""SELECT table_day from `tabWorkoutChild Child` where table_parent=%s group by table_day""",(parent))
 	array = []
 	for x in xrange(0,len(data)):
 		array.append(

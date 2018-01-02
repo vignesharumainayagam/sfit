@@ -19,3 +19,7 @@ frappe.ui.form.on("Schedules", "reset_current_day", function(frm) {
 	}
             })
 })
+
+
+
+

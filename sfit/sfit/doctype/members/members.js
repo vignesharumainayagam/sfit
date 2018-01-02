@@ -16,34 +16,6 @@ frappe.ui.form.on("Members", "validate", function(frm) {
 });
 
 
-frappe.ui.form.on("Members", "onload", function(frm) {
-if(!frm.doc.__islocal)
-  {
-
-frappe.call({
-method: "sfit.sfit.doctype.members.members.January",
-args: {
-    parent: frm.doc.name,
-
-       },
-callback: function (r) 
-{
-  if(r.message){
-console.log(r.message)
-cur_frm.set_value("current_workout_plan", r.message[0].workout_plan);
-}
-else{
-  console.log("hi")
-}
-}
-})
-
-    }
-else{
-  console.log("HI")
-}
-});
-
 
 frappe.ui.form.on("Members", "onload", function(frm) {
 $(frm.fields_dict['current_workout_plan_html'].wrapper)
@@ -89,7 +61,7 @@ $.ajax({
           }
           });
 frappe.set_route("Form", "Schedules", frm.doc.name);
-
+location.reload();
 });
 
 $( "#mesurement" ).click(function() {
