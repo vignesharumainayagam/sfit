@@ -125,5 +125,3 @@ if(frm.doc.table_27)
 }
 
        });
-
-
