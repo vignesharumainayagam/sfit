@@ -3,7 +3,7 @@
 
 frappe.ui.form.on('WorkoutChild', {
 	refresh: function(frm) {
-
+		frappe.breadcrumbs.add("Workout");
 	}
 });
 
@@ -29,13 +29,5 @@ frappe.model.set_value(cdt, cdn, "table_day", frm.doc.day);
 
 
 
-// frappe.ui.form.on("WorkoutChild Child", "exercise", function(frm, cdt, cdn){
-// d = locals[cdt][cdn]
-//     cur_frm.set_query("exercise", function() {
-//         return {
-//             "filters": {
-//                 "course": (frm.doc.course)
-//             }
-//         };
-//     });   
-// });
+
+
