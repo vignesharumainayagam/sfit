@@ -17,10 +17,10 @@ class WorkoutPlan(Document):
 
 
 
-@frappe.whitelist()
-def get_child_data(parent, day):
-	data = frappe.db.sql("""SELECT * FROM `tabWorkoutChild Child` WHERE table_parent=%s AND table_day=%s""",(parent, day))
-	return data
+# @frappe.whitelist()
+# def get_child_data(parent, day):
+# 	data = frappe.db.sql("""SELECT * FROM `tabWorkoutChild Child` WHERE table_parent=%s AND table_day=%s""",(parent, day))
+# 	return data
 
 
 
@@ -49,3 +49,13 @@ def get_child_data_api(parent):
 	return array
 
 
+@frappe.whitelist()
+def get_child_data(parent, day):
+        data = frappe.get_list('WorkoutChild Child',
+                fields=["groups", "exercise", "sets", "reps", "timer_count", "rest_interval"],
+                filters = [
+                ["table_parent", "=", parent],
+                ["table_day", "=", day]
+                ]
+                )      
+        return data

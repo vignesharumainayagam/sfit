@@ -4,7 +4,9 @@
 
 frappe.ui.form.on("Workout Day", "edit", function(frm, cdt, cdn){
 d = locals[cdt][cdn]
-frappe.set_route("Form", "WorkoutChild", frm.doc.plan_name+d.day);
+var route_name =  frm.doc.plan_name;
+var str = route_name.replace(/\s*$/,"");
+frappe.set_route("Form", "WorkoutChild", str+d.day);
 });
 
 frappe.ui.form.on("Workout Plan", "no_of_days", function(frm){
@@ -51,7 +53,9 @@ else{
     }
     cur_frm.get_field("table_27").grid.grid_rows[0].remove()
 }
+alert("Please Save to Continue")
 cur_frm.save()
+
 });
 
  
@@ -71,7 +75,7 @@ d = locals[cdt][cdn]
             <style>table {font-family: arial, sans-serif;border-collapse: collapse;width: 100%;}td,\
             th {border: 1px solid #dddddd;text-align: left;padding: 8px;}tr:nth-child(even) {background-color: #dddddd;}</style>';
             for(var i=0; i<r.message.length; i++){
-            contacts_area+="<tr><td>"+r.message[i][10]+"</td><td>"+r.message[i][15]+"</td><td>"+r.message[i][14]+"</td><td>"+r.message[i][11]+"</td><td>"+r.message[i][13]+"</td><td>"+r.message[i][12]+"</td></tr>";                    
+            contacts_area+="<tr><td>"+r.message[i].groups+"</td><td>"+r.message[i].exercise+"</td><td>"+r.message[i].sets+"</td><td>"+r.message[i].reps+"</td><td>"+r.message[i].timer_count+"</td><td>"+r.message[i].rest_interval+"</td></tr>";                    
             }
             contacts_area+="</table>";
             $(".frappe-control[data-fieldname=html_field]").html(contacts_area);
@@ -86,15 +90,10 @@ d = locals[cdt][cdn]
 });
 
 
-frappe.ui.form.on("Workout Plan", "no_of_days", function(frm){
-alert("Please Save to Continue")
-cur_frm.save()
-});
 
 
 
-
-frappe.ui.form.on("Workout Plan", "validate", function(frm){
+frappe.ui.form.on("Workout Plan", "after_save", function call(frm){
 console.log(frm.doc.table_27)
 if(frm.doc.table_27)
 {
@@ -106,7 +105,7 @@ if(frm.doc.table_27)
           type: 'POST',
           contentType: 'application/json',
           data : JSON.stringify( {
-          "parent1" : frm.doc.name,
+          "parent1" : frm.doc.plan_name,
           "day" : frm.doc.table_27[i].day,
           "forname" : frm.doc.name+frm.doc.table_27[i].day,
           }
