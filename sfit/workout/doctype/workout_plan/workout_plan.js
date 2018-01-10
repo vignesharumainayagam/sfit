@@ -61,7 +61,9 @@ cur_frm.save()
  
 frappe.ui.form.on("Workout Day", "form_render", function(frm, cdt, cdn){
 d = locals[cdt][cdn]
-        frappe.call({
+if(frm.doc.__islocal==0)
+{  
+          frappe.call({
         method: "sfit.workout.doctype.workout_plan.workout_plan.get_child_data",
         args: {
             parent: frm.doc.name,
@@ -87,6 +89,7 @@ d = locals[cdt][cdn]
         }
         })
 
+}
 });
 
 
@@ -124,3 +127,5 @@ if(frm.doc.table_27)
 }
 
        });
+
+
