@@ -25,9 +25,16 @@ frappe.model.set_value(cdt, cdn, "table_parent", frm.doc.parent1);
 frappe.model.set_value(cdt, cdn, "table_day", frm.doc.day);
 });
 
-
-
-
+frappe.ui.form.on("WorkoutChild", "refresh", function(frm) {
+	frm.fields_dict['table_5'].grid.get_field('exercise').get_query = function(doc, cdt, cdn) {
+	child = locals[cdt][cdn];
+				return{	
+			filters:[
+				['exercise_group', '=', child.groups]
+			]
+		}
+	}
+});
 
 
 
