@@ -17,10 +17,6 @@ class WorkoutPlan(Document):
 
 
 
-# @frappe.whitelist()
-# def get_child_data(parent, day):
-# 	data = frappe.db.sql("""SELECT * FROM `tabWorkoutChild Child` WHERE table_parent=%s AND table_day=%s""",(parent, day))
-# 	return data
 
 
 
