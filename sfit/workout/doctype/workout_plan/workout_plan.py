@@ -27,7 +27,7 @@ class WorkoutPlan(Document):
 @frappe.whitelist()
 def api(parent, child):
         data = frappe.get_list('WorkoutChild Child',
-                fields=["groups", "exercise", "sets", "reps", "timer_count", "rest_interval"],
+                fields=["groups", "exercise", "sets", "reps", "timer_count", "rest_interval", "description"],
                 filters = [
                 ["table_parent", "=", parent],
                 ["table_day", "=", child]
